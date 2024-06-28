@@ -1,0 +1,5 @@
+package com.logistica.controller;
+
+public class VeiculoController {
+
+}
