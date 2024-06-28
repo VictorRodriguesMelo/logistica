@@ -9,6 +9,6 @@ import com.logistica.entity.Veiculo;
 
 public interface VeiculoRepository extends JpaRepository<Veiculo, Long>{
 	
-	 @Query("SELECT s FROM Veiculo s WHERE s.email=?1")
+	 @Query("SELECT s FROM Veiculo s WHERE s.name=?1")
 	    Optional<Veiculo> findVeiculoByEmail(String email);
 }
