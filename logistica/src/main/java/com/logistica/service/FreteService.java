@@ -27,7 +27,7 @@ public class FreteService {
     }
 
 	 public void addNewFrete(Frete frete) { 
-		Optional<Frete> FreteOptional =freteRepository.findFreteByEmail(frete.getCodigoFrete());
+		Optional<Frete> FreteOptional = freteRepository.findFreteByEmail(frete.getCodigoFrete());
 		if(FreteOptional.isPresent()) {
 			throw new IllegalStateException("email exist");
 		} 

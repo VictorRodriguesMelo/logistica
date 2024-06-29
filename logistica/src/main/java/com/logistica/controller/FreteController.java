@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.logistica.entity.Frete;
+import com.logistica.entity.Veiculo;
 import com.logistica.service.FreteService;
 
 
@@ -23,6 +24,18 @@ public class FreteController {
 
 	@Autowired
     private final FreteService freteService;
+	
+	@GetMapping ("/init")
+	public void init() {
+		Veiculo veiculo = new Veiculo(null, "saveiro", "aaa-1010");
+		Frete frete = new Frete(null, 1, 1000.00, 50.00, "caminhonete", veiculo);
+		Frete freteUm = new Frete(null, 2, 1000.00, 50.00, "furgao", veiculo);
+		Frete fretea = new Frete(null, 3, 1000.00, 50.00, "caminhao", veiculo);
+		
+		registerFrete(frete);
+		registerFrete(freteUm);
+		registerFrete(fretea);
+	}
 
     public FreteController(FreteService freteService) {
         this.freteService = freteService;

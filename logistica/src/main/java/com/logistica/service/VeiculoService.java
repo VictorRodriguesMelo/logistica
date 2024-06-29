@@ -23,11 +23,12 @@ public class VeiculoService {
     }
 
     public List<Veiculo> getVeiculo() {
-        return veiculoRepository.findAll();
+    	List<Veiculo> veiculo = veiculoRepository.findAll();
+        return veiculo;
     }
 
     public void addNewVeiculo(Veiculo veiculo) {
-        Optional<Veiculo> VeiculoOptional = veiculoRepository.findVeiculoByEmail(veiculo.getEmail());
+        Optional<Veiculo> VeiculoOptional = veiculoRepository.findVeiculoByEmail(veiculo.getName());
         if (VeiculoOptional.isPresent()) {
             throw new IllegalStateException("email exist");
         }
@@ -51,12 +52,12 @@ public class VeiculoService {
             veiculo.setName(name);
         }
 
-        if (email != null && email.length() > 0 && !Objects.equals(email, veiculo.getEmail())) {
+        if (email != null && email.length() > 0 && !Objects.equals(email, veiculo.getName())) {
             Optional<Veiculo> VeiculoOptional = veiculoRepository.findVeiculoByEmail(email);
             if (VeiculoOptional.isPresent()) {
                 throw new IllegalStateException("email exist");
             }
-            veiculo.setEmail(email);
+            veiculo.setName(name);
         }
 
         veiculoRepository.save(veiculo);

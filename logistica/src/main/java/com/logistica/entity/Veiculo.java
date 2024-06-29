@@ -1,15 +1,12 @@
 package com.logistica.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.Period;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -35,71 +32,37 @@ public class Veiculo implements Serializable{
     private String name;
     private String placa;
     
+    public Veiculo () {
+    }
+    
+	public Veiculo(Long id, String name, String placa) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.placa = placa;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPlaca() {
+		return placa;
+	}
+	public void setPlaca(String placa) {
+		this.placa = placa;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
     
     
-    private LocalDate dob;
-    @Transient
-    private Integer age;
-
-    public Veiculo() {
-    }
-
-    public Veiculo(Long id,
-                   String name,
-                   String email,
-                   LocalDate dob) {
-        this.id = id;
-        this.name = name;
-        this.placa = email;
-        this.dob = dob;
-    }
-
-    public Veiculo(String name,
-                   String email,
-                   LocalDate dob) {
-        this.name = name;
-        this.placa = email;
-        this.dob = dob;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return placa;
-    }
-
-    public void setEmail(String email) {
-        this.placa = email;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public Integer getAge() {
-        return Period.between(this.dob, LocalDate.now()).getYears();
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
 }

@@ -20,6 +20,19 @@ import com.logistica.service.UsuarioService;
 @RestController
 @RequestMapping(path = "usuario")
 public class UsuarioController {
+	
+	@GetMapping ("/init")
+	public void init() {
+		Usuario usuarioJoao = new Usuario(null, 10, "João Paulo");
+		Usuario usuarioMaria = new Usuario(null, 20, "Maria Luiza");
+		Usuario usuarioJose = new Usuario(null, 30, "José Silva");
+		Usuario usuarioAna = new Usuario(null, 40, "Ana Melo");
+		
+		registerUsuario(usuarioJoao);
+		registerUsuario(usuarioMaria);
+		registerUsuario(usuarioJose);
+		registerUsuario(usuarioAna);
+	}
 
 	@Autowired
     private final UsuarioService usuarioService;

@@ -18,8 +18,19 @@ import com.logistica.service.VeiculoService;
 
 
 @RestController
-@RequestMapping(path = "logistica")
+@RequestMapping(path = "veiculo")
 public class VeiculoController {
+	
+	@GetMapping ("/init")
+	public void init() {
+		Veiculo veiculoCaminhonete = new Veiculo(null, "caminhonete", "bbb-2020");
+		Veiculo veiculoFurgao = new Veiculo(null, "furgao", "bbb-2020");
+		Veiculo veiculocaminhao = new Veiculo(null, "caminhao", "bbb-2020");
+		
+		registerVeiculo(veiculoCaminhonete);
+		registerVeiculo(veiculoFurgao);
+		registerVeiculo(veiculocaminhao);
+	}
 
 	@Autowired
     private final VeiculoService veiculoService;
@@ -29,22 +40,22 @@ public class VeiculoController {
     }
 
     @GetMapping
-    public List<Veiculo> getStudent() {
+    public List<Veiculo> getVeiculo() {
         return veiculoService.getVeiculo();
     }
 
     @PostMapping
-    public void registerStudent(@RequestBody Veiculo veiculo) {
+    public void registerVeiculo(@RequestBody Veiculo veiculo) {
         veiculoService.addNewVeiculo(veiculo);
     }
 
     @DeleteMapping(path = "{studentId}")
-    public void deleteStudent(@PathVariable("studentId") Long studentId) {
+    public void deleteVeiculo(@PathVariable("studentId") Long studentId) {
         veiculoService.deleteVeiculo(studentId);
     }
 
     @PutMapping(path = "{studentId}")
-    public void updateStudent(@PathVariable("studentId") Long studentId,
+    public void updateVeiculo(@PathVariable("studentId") Long studentId,
                               @RequestParam(required = false) String name,
                               @RequestParam(required = false) String email){
         veiculoService.updateVeiculo(studentId, name, email);
