@@ -23,7 +23,8 @@ public class UsuarioService {
     }
 
     public List<Usuario> getUsuario() {
-        return usuarioRepository.findAll();
+    	List<Usuario>  usuarios = usuarioRepository.findAll();
+        return usuarios;
     }
 
 	 public void addNewUsuario(Usuario usuario) { 

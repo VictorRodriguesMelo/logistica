@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.logistica.entity.Frete;
+import com.logistica.entity.TiposVeiculos;
 import com.logistica.repository.FreteRepository;
 
 import jakarta.transaction.Transactional;
@@ -23,15 +24,19 @@ public class FreteService {
     }
 
     public List<Frete> getFrete() {
-        return freteRepository.findAll();
+    	List<Frete> fretes = freteRepository.findAll();
+    	if(fretes != null) {
+    		return fretes;
+    	}
+        return null;
     }
 
 	 public void addNewFrete(Frete frete) { 
-		Optional<Frete> FreteOptional = freteRepository.findFreteByEmail(frete.getCodigoFrete());
+		Optional<Frete> FreteOptional = freteRepository.findFreteByCodigoFrete(frete.getCodigoFrete());
 		if(FreteOptional.isPresent()) {
-			throw new IllegalStateException("email exist");
+			throw new IllegalStateException("Frete cadastrado");
 		} 
-		freteRepository.save(frete); 
+		freteRepository.save(calcularValorFrete(frete)); 
 	 }
 
     public void deleteFrete(Long FreteId) {
@@ -52,7 +57,7 @@ public class FreteService {
         }
 
         if (cod != null && !Objects.equals(cod, frete.getCodigoFrete())) {
-            Optional<Frete> FreteOptional = freteRepository.findFreteByEmail(cod);
+            Optional<Frete> FreteOptional = freteRepository.findFreteByCodigoFrete(cod);
             if (FreteOptional.isPresent()) {
                 throw new IllegalStateException("email exist");
             }
@@ -60,7 +65,58 @@ public class FreteService {
         }
 
         freteRepository.save(frete);
-
     }
 
+	public Frete calcularValorFrete(Frete frete) {
+		String tipoVeiculo;
+		Integer distancia;
+		if(frete != null) {
+			tipoVeiculo = frete.getTipoVeiculo();
+			distancia = frete.getDistancia();
+			
+			if(tipoVeiculo.equals(TiposVeiculos.caminhao.getDescricao())) {
+				Double valorSemTaxaDistancia = (double)(distancia * 10);
+				frete.setValor(adicionarTaxaSobreDistancia(distancia, valorSemTaxaDistancia));
+				frete.setTaxa(calcularTaxa(valorSemTaxaDistancia, 7.5));
+			}
+			else if(tipoVeiculo.equals(TiposVeiculos.caminhonete.getDescricao())) {
+				Double valorSemTaxaDistancia = (double)(distancia * 5);
+				frete.setValor(adicionarTaxaSobreDistancia(distancia, valorSemTaxaDistancia));
+				frete.setTaxa(calcularTaxa(valorSemTaxaDistancia, 15.0));
+			}
+			else if(tipoVeiculo.equals(TiposVeiculos.furgao.getDescricao())) {
+				Double valorSemTaxaDistancia = (double)(distancia * 4);
+				frete.setValor(adicionarTaxaSobreDistancia(distancia, valorSemTaxaDistancia));
+				frete.setTaxa(calcularTaxa(valorSemTaxaDistancia, 15.0));
+			}
+			return frete;
+		}
+		throw new IllegalStateException("Ocorreu um erro no calculo do frete");
+	}
+
+	private Double adicionarTaxaSobreDistancia(Integer distancia, Double valor) {
+		if(distancia != null && valor != null) {
+			if(distancia > 0 && distancia <= 100) {
+				return adicionarPorcentagem(20.0, valor);
+			}
+			else if(distancia > 100 && distancia <= 200) {
+				return adicionarPorcentagem(15.0, valor);
+			}
+			else if(distancia > 200 && distancia <= 500) {
+				return adicionarPorcentagem(10.0, valor);
+			}
+			else if(distancia > 500) {
+				return adicionarPorcentagem(7.5, valor);
+			}
+		}
+		return null;
+	}
+
+	private Double adicionarPorcentagem(Double porcentagem, Double valor) {
+		return (valor / 100) * (100 + porcentagem);
+	}
+
+	private Double calcularTaxa(Double valor, Double porcentagem) {
+		return (valor / 100) * porcentagem;
+	}
 }

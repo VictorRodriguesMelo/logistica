@@ -1,0 +1,127 @@
+package com.logistica.service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.logistica.entity.Frete;
+import com.logistica.entity.TiposVeiculos;
+import com.logistica.repository.FreteRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class FreteService {
+
+	@Autowired
+    private final FreteRepository freteRepository;
+
+    public FreteService(FreteRepository freteRepository) {
+        this.freteRepository = freteRepository;
+    }
+
+    public List<Frete> getFrete() {
+    	List<Frete> fretes = freteRepository.findAll();
+    	if(fretes != null) {
+    		return fretes;
+    	}
+        return null;
+    }
+
+	 public void addNewFrete(Frete frete) { 
+		Optional<Frete> FreteOptional = freteRepository.findFreteByCodigoFrete(frete.getCodigoFrete());
+		if(FreteOptional.isPresent()) {
+			throw new IllegalStateException("Frete cadastrado");
+		} 
+		freteRepository.save(calcularValorFrete(frete)); 
+	 }
+
+    public void deleteFrete(Long FreteId) {
+        boolean exist = freteRepository.existsById(FreteId);
+        if (!exist) {
+            throw new IllegalStateException("Frete with ID " + FreteId + " does not exist");
+        }
+        freteRepository.deleteById(FreteId);
+    }
+
+    @Transactional
+    public void updateFrete(Long FreteId, String name, Integer cod) {
+        Frete frete = freteRepository.findById(FreteId)
+                .orElseThrow(() -> new IllegalStateException("Frete with ID " + FreteId + " does not exist"));
+
+        if (name != null && name.length() > 0 && !Objects.equals(name, frete.getCodigoFrete())) {
+            frete.setCodigoFrete(null);
+        }
+
+        if (cod != null && !Objects.equals(cod, frete.getCodigoFrete())) {
+            Optional<Frete> FreteOptional = freteRepository.findFreteByCodigoFrete(cod);
+            if (FreteOptional.isPresent()) {
+                throw new IllegalStateException("email exist");
+            }
+            frete.setCodigoFrete(null);
+        }
+
+        freteRepository.save(frete);
+    }
+
+	public Frete calcularValorFrete(Frete frete) {
+		String tipoVeiculo;
+		Integer distancia;
+		if(frete != null) {
+			tipoVeiculo = frete.getTipoVeiculo();
+			distancia = frete.getDistancia();
+			
+			if(tipoVeiculo.equals(TiposVeiculos.caminhao.getDescricao())) {
+				Double valor = (double)(distancia * 10);
+				adicionarTaxaSobreDistancia(distancia, valor);
+				frete.setValor(valor);
+				frete.setTaxa(calcularTaxa(valor, 7.5));
+			}
+			
+			else if(tipoVeiculo.equals(TiposVeiculos.caminhonete.getDescricao())) {
+				Double valor = (double)(distancia * 5);
+				frete.setValor(valor);
+				frete.setTaxa(calcularTaxa(valor, 15.0));
+			}
+			
+			else if(tipoVeiculo.equals(TiposVeiculos.furgao.getDescricao())) {
+				Double valor = (double)(distancia * 4);
+				frete.setValor(valor);
+				frete.setTaxa(calcularTaxa(valor, 15.0));
+			}
+			return frete;
+		}
+		throw new IllegalStateException("Ocorreu um erro no calculo do frete");
+	}
+
+
+	private Double adicionarTaxaSobreDistancia(Integer distancia, Double valor) {
+		if(distancia != null && valor != null) {
+			if(distancia > 0 && distancia <= 100) {
+				return adicionarPorcentagem(20.0, valor);
+			}
+			else if(distancia > 100 && distancia <= 200) {
+				return adicionarPorcentagem(15.0, valor);
+			}
+			else if(distancia > 200 && distancia <= 500) {
+				return adicionarPorcentagem(10.0, valor);
+			}
+			else if(distancia > 500) {
+				return adicionarPorcentagem(7.5, valor);
+			}
+		}
+		return null;
+	}
+
+	private Double adicionarPorcentagem(Double porcentagem, Double valor) {
+		return (valor / 100) * (100 + porcentagem);
+		
+	}
+
+	private Double calcularTaxa(Double valor, Double porcentagem) {
+		return (valor / 100) * porcentagem;
+	}
+}

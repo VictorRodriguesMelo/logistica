@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "veiculo")
+@Table(name = "Veiculo")
 @Getter
 @Setter
 public class Veiculo implements Serializable{

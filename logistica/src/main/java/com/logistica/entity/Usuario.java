@@ -32,6 +32,9 @@ public class Usuario implements Serializable{
     private Integer codigoUsuario;
     private String nome;
     
+    public Usuario() {
+    }
+    
 	public Usuario(Long id, Integer codigoUsuario, String nome) {
 		super();
 		this.id = id;
