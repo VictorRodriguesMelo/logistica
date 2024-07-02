@@ -30,7 +30,7 @@ public class UsuarioService {
 	 public void addNewUsuario(Usuario usuario) { 
 		Optional<Usuario> UsuarioOptional =usuarioRepository.findUsuarioByName(usuario.getCodigoUsuario());
 		if(UsuarioOptional.isPresent()) {
-			throw new IllegalStateException("email exist");
+			throw new IllegalStateException("Usuario cadastrado");
 		} 
 		usuarioRepository.save(usuario); 
 	 }

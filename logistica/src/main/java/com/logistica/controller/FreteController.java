@@ -23,17 +23,6 @@ public class FreteController {
 
 	@Autowired
     private final FreteService freteService;
-	
-	@GetMapping ("/init")
-	public void init() {
-		Frete frete = new Frete(1, "caminhonete", 1000);
-		Frete freteUm = new Frete(2, "furgao", 50);
-		Frete fretea = new Frete(3, "caminhao", 10);
-		
-		registerFrete(frete);
-		registerFrete(freteUm);
-		registerFrete(fretea);
-	}
 
     public FreteController(FreteService freteService) {
         this.freteService = freteService;

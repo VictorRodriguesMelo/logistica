@@ -1,0 +1,29 @@
+package com.logistica;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.logistica.controller.FreteController;
+import com.logistica.entity.Frete;
+
+@SpringBootTest
+class LogisticaApplicationTests {
+
+	@Test
+	void contextLoads() {
+		initFrete();
+	}
+	
+	public void initFrete() {
+		FreteController fretecontroller = new FreteController(null);
+		Frete frete = new Frete(1, "caminhonete", 1000);
+		Frete freteUm = new Frete(2, "furgao", 50);
+		Frete fretea = new Frete(3, "caminhao", 10);
+		
+		fretecontroller.registerFrete(frete);
+		fretecontroller.registerFrete(freteUm);
+		fretecontroller.registerFrete(fretea);
+	}
+
+}

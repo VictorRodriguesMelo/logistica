@@ -1,0 +1,49 @@
+package com.logistica;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.logistica.controller.FreteController;
+import com.logistica.controller.UsuarioController;
+import com.logistica.entity.Frete;
+import com.logistica.entity.Usuario;
+
+@SpringBootTest
+class LogisticaApplicationTests {
+	
+	@Autowired
+	private FreteController fretecontroller;
+	
+	@Autowired
+    private UsuarioController usuarioController;
+	
+	@Test
+	void contextLoads() {
+		initFrete();
+		initUsuario();
+	}
+	
+	public void initFrete() {
+		Frete frete = new Frete(1, "caminhonete", 1000);
+		Frete freteUm = new Frete(2, "furgao", 50);
+		Frete fretea = new Frete(3, "caminhao", 10);
+		
+		fretecontroller.registerFrete(frete);
+		fretecontroller.registerFrete(freteUm);
+		fretecontroller.registerFrete(fretea);
+	}
+	
+	public void initUsuario() {
+		Usuario usuarioJoao = new Usuario(null, 10, "João Paulo");
+		Usuario usuarioMaria = new Usuario(null, 20, "Maria Luiza");
+		Usuario usuarioJose = new Usuario(null, 30, "José Silva");
+		Usuario usuarioAna = new Usuario(null, 40, "Ana Melo");
+		
+		usuarioController.registerUsuario(usuarioJoao);
+		usuarioController.registerUsuario(usuarioMaria);
+		usuarioController.registerUsuario(usuarioJose);
+		usuarioController.registerUsuario(usuarioAna);
+	}
+
+}

@@ -35,6 +35,7 @@ public class Frete implements Serializable{
     private Double taxa;
     private String tipoVeiculo;
     private Integer distancia;
+    private Boolean emAndamento;
     
     public Frete() {
     }
@@ -96,7 +97,14 @@ public class Frete implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-    
+
+	public Boolean getEmAndamento() {
+		return emAndamento;
+	}
+
+	public void setEmAndamento(Boolean emAndamento) {
+		this.emAndamento = emAndamento;
+	}
 
     @Override
 	public int hashCode() {
@@ -116,4 +124,5 @@ public class Frete implements Serializable{
 				&& Objects.equals(id, other.id) && Objects.equals(taxa, other.taxa)
 				&& Objects.equals(tipoVeiculo, other.tipoVeiculo) && Objects.equals(valor, other.valor);
 	}
+
 }

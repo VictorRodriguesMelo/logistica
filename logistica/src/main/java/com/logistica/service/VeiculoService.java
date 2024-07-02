@@ -30,7 +30,7 @@ public class VeiculoService {
     public void addNewVeiculo(Veiculo veiculo) {
         Optional<Veiculo> VeiculoOptional = veiculoRepository.findVeiculoByEmail(veiculo.getName());
         if (VeiculoOptional.isPresent()) {
-            throw new IllegalStateException("email exist");
+            throw new IllegalStateException("Veículo cadastrado");
         }
         veiculoRepository.save(veiculo);
     }
