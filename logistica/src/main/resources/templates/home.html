@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Página Web com Spring Boot e REST</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/api/mensagem')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('mensagem').textContent = data;
+                })
+                .catch(error => console.error('Erro ao buscar a mensagem:', error));
+        });
+    </script>
+</head>
+<body>
+    <h1 id="mensagem">Carregando mensagem...</h1>
+    <p>Este é um exemplo de uma página web que se comunica com uma API REST.</p>
+</body>
+</html>

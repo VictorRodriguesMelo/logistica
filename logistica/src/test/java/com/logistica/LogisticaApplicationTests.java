@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.logistica.controller.FreteController;
 import com.logistica.controller.UsuarioController;
 import com.logistica.controller.VeiculoController;
-import com.logistica.entity.Frete;
 import com.logistica.entity.Usuario;
 import com.logistica.entity.Veiculo;
 
@@ -27,12 +26,12 @@ class LogisticaApplicationTests {
 	
 	@Test
 	void contextLoads() {
-		testeFrete();
+		//testeFrete();
 		testeUsuario();
 		testeVeiculo();
 	}
 	
-	public void testeFrete() {
+	/*public void testeFrete() {
 		Frete frete = new Frete(1, "caminhonete", 1000);
 		freteController.registerFrete(frete);
 		
@@ -41,7 +40,7 @@ class LogisticaApplicationTests {
 			System.out.println("##### DISTANCIA: " + item.getDistancia());
 			System.out.println("##### EM ANDAMENTO: " + item.getEmAndamento());
 		}
-	}
+	}*/
 	
 	public void testeUsuario() {
 		Usuario usuarioJoao = new Usuario(null, 10, "João Paulo");

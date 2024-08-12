@@ -1,7 +1,6 @@
 package com.logistica.service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +46,24 @@ public class FreteService {
         freteRepository.deleteById(FreteId);
     }
 
-    @Transactional
-    public void updateFrete(Long FreteId, String name, Integer cod) {
-        Frete frete = freteRepository.findById(FreteId)
-                .orElseThrow(() -> new IllegalStateException("Frete with ID " + FreteId + " does not exist"));
-
-        if (name != null && name.length() > 0 && !Objects.equals(name, frete.getCodigoFrete())) {
-            frete.setCodigoFrete(null);
+	@Transactional
+    public void updateFrete(Long FreteId, Frete frete) {
+        Optional<Frete> existeFrete = freteRepository.findById(FreteId);
+        
+        if (existeFrete.isPresent()) {
+        	Frete freteAtualizado = existeFrete.get();
+        	freteAtualizado.setCodigoFrete(frete.getCodigoFrete());
+        	freteAtualizado.setDistancia(frete.getDistancia());
+        	freteAtualizado.setEmAndamento(frete.getEmAndamento());
+        	freteAtualizado.setTaxa(frete.getTaxa());
+        	freteAtualizado.setValor(frete.getValor());
+        	freteAtualizado.setTipoVeiculo(frete.getTipoVeiculo());
+        	
+        	freteRepository.save(freteAtualizado);
+        }else {
+        	new IllegalStateException("Frete with ID " + FreteId + " does not exist");
         }
-
-        if (cod != null && !Objects.equals(cod, frete.getCodigoFrete())) {
-            Optional<Frete> FreteOptional = freteRepository.findFreteByCodigoFrete(cod);
-            if (FreteOptional.isPresent()) {
-                throw new IllegalStateException("email exist");
-            }
-            frete.setCodigoFrete(null);
-        }
-
-        freteRepository.save(frete);
+        
     }
 
 	public Frete calcularValorFrete(Frete frete) {

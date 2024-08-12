@@ -1,4 +1,5 @@
-GitRepositoriesView.GitDirectories=/home/victor/git/repository/.git\:
-GitRepositoriesView.GitDirectories.relative=/home/victor/git/repository/.git\:
+GitRepositoriesView.GitDirectories=/home/victor/git/repository2\:
+GitRepositoriesView.GitDirectories.relative=/home/victor/git/repository2\:
+RepositoryGroups.uuids=
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1

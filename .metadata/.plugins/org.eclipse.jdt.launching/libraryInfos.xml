@@ -2,6 +2,7 @@
 <libraryInfos>
     <libraryInfo home="/home/victor/Área de Trabalho/sts-4.22.1.RELEASE/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_17.0.11.v20240426-1830/jre" version="17.0.11"/>
     <libraryInfo home="/usr/lib/jvm/jdk-20" version="20.0.1"/>
+    <libraryInfo home="/usr/lib/jvm/java-17-openjdk-amd64" version="17.0.12"/>
     <libraryInfo home="/home/victor/Área de Trabalho/sts-4.22.1.RELEASE/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_17.0.11.v20240426-1830" version="17.0.11"/>
     <libraryInfo home="/usr/lib/jvm/java-8-openjdk-amd64" version="1.8.0_412">
         <bootpath>
@@ -22,5 +23,5 @@
             <entry path="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/endorsed"/>
         </endorsedDirs>
     </libraryInfo>
-    <libraryInfo home="/usr/lib/jvm/java-11-openjdk-amd64" version="11.0.23"/>
+    <libraryInfo home="/usr/lib/jvm/java-11-openjdk-amd64" version="11.0.24"/>
 </libraryInfos>

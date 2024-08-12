@@ -21,16 +21,6 @@ import com.logistica.service.VeiculoService;
 @RequestMapping(path = "veiculo")
 public class VeiculoController {
 	
-	@GetMapping ("/init")
-	public void init() {
-		Veiculo veiculoCaminhonete = new Veiculo(null, "caminhonete", "bbb-2020");
-		Veiculo veiculoFurgao = new Veiculo(null, "furgao", "bbb-2020");
-		Veiculo veiculocaminhao = new Veiculo(null, "caminhao", "bbb-2020");
-		
-		registerVeiculo(veiculoCaminhonete);
-		registerVeiculo(veiculoFurgao);
-		registerVeiculo(veiculocaminhao);
-	}
 
 	@Autowired
     private final VeiculoService veiculoService;
@@ -39,7 +29,7 @@ public class VeiculoController {
         this.veiculoService = veiculoService;
     }
 
-    @GetMapping
+    @GetMapping("/getveiculo")
     public List<Veiculo> getVeiculo() {
         return veiculoService.getVeiculo();
     }

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;GrupoController.java&apos; to &apos;logistica/src/main/java/com.logistica.controller&apos;&#x0A;- Original project: &apos;sbootexp-security&apos;&#x0A;- Destination element: &apos;logistica/src/main/java/com.logistica.controller&apos;&#x0A;- Original element: &apos;io.github.cursodsousa.sbootexpsecurity.api.GrupoController.java&apos;" description="Copy compilation unit" destination="=logistica/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.logistica.controller" element1="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;io.github.cursodsousa.sbootexpsecurity.api{GrupoController.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1722358326036" units="1" version="1.0"/>
+</session>

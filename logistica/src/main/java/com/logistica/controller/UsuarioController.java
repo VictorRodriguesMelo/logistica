@@ -3,6 +3,8 @@ package com.logistica.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.logistica.entity.Usuario;
@@ -21,19 +25,6 @@ import com.logistica.service.UsuarioService;
 @RequestMapping(path = "usuario")
 public class UsuarioController {
 	
-	@GetMapping ("/init")
-	public void init() {
-		Usuario usuarioJoao = new Usuario(null, 10, "João Paulo");
-		Usuario usuarioMaria = new Usuario(null, 20, "Maria Luiza");
-		Usuario usuarioJose = new Usuario(null, 30, "José Silva");
-		Usuario usuarioAna = new Usuario(null, 40, "Ana Melo");
-		
-		registerUsuario(usuarioJoao);
-		registerUsuario(usuarioMaria);
-		registerUsuario(usuarioJose);
-		registerUsuario(usuarioAna);
-	}
-
 	@Autowired
     private final UsuarioService usuarioService;
 
@@ -41,23 +32,28 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping
+    @GetMapping("/getusuario")
     public List<Usuario> getUsuario() {
         return usuarioService.getUsuario();
     }
 
     @PostMapping
+    @Transactional
     public void registerUsuario(@RequestBody Usuario usuario) {
         usuarioService.addNewUsuario(usuario);
     }
 
-    @DeleteMapping(path = "{usuarioid}")
+    @DeleteMapping("{usuarioid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
     public void deleteUsuario(@PathVariable("usuarioid") Long usuarioid) {
         usuarioService.deleteUsuario(usuarioid);
     }
 
-    @PutMapping(path = "{usuarioid}")
-    public void updateUsuario(@PathVariable("usuarioid") Long usuarioid,
+    @PutMapping("{putid}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void updateUsuario(@PathVariable("putid") Long usuarioid,
                               @RequestParam(required = false) String name,
                               @RequestParam(required = false) Integer codigo){
         usuarioService.updateUsuario(usuarioid, name, codigo);
